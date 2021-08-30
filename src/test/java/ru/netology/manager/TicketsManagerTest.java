@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.netology.domain.Ticket;
+import ru.netology.domain.TicketByTimeComparator;
 import ru.netology.repository.TicketsRepository;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -29,7 +30,7 @@ class TicketsManagerTest {
     }
 
     @Test
-    void shouldSearchAndSort() {
+    void shouldSearchAndPriceSort() {
         Ticket[] expected = {ticket3, ticket1, ticket2};
         assertArrayEquals(expected, manager.search("NAY", "NBH"));
     }
@@ -41,5 +42,11 @@ class TicketsManagerTest {
     void shouldNotSearch(String from, String to) {
         Ticket[] expected = {};
         assertArrayEquals(expected, manager.search(from,to));
+    }
+
+    @Test
+    void shouldSearchAndTimeSort() {
+        Ticket[] expected = {ticket2, ticket3, ticket1};
+        assertArrayEquals(expected, manager.search("NAY", "NBH", new TicketByTimeComparator()));
     }
 }
